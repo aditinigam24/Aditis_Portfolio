@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { usePerformanceMode } from "@/hooks/use-performance-mode";
+import { fadeInUp } from "@/lib/motion-presets";
 import {
   Brain,
   Code2,
@@ -23,6 +25,8 @@ const traits = [
 ];
 
 export function WhyMe() {
+  const lite = usePerformanceMode();
+
   return (
     <section id="why" className="relative px-6 py-32">
       <div className="mx-auto max-w-7xl">
@@ -42,11 +46,8 @@ export function WhyMe() {
           {traits.map((t, i) => (
             <motion.div
               key={t.label}
-              initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: i * 0.05 }}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-white/[0.02] p-6 backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:border-primary/50"
+              {...fadeInUp(lite, i * 0.03)}
+              className={`group relative overflow-hidden rounded-2xl border border-border bg-white/[0.02] p-6 backdrop-blur hover:border-primary/50 ${lite ? "" : "transition-all duration-500 hover:-translate-y-1"}`}
             >
               <div className="relative">
                 <div className="mb-4 grid h-10 w-10 place-items-center rounded-xl border border-border bg-white/[0.04] transition group-hover:border-secondary/60">

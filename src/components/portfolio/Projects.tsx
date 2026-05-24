@@ -1,6 +1,8 @@
 // aditi-s-digital-canvas-main/src/components/portfolio/Projects.tsx
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { usePerformanceMode } from "@/hooks/use-performance-mode";
+import { fadeInUp } from "@/lib/motion-presets";
 import { SectionHeader } from "./SectionHeader";
 
 const projects = [
@@ -35,6 +37,8 @@ const projects = [
 ];
 
 export function Projects() {
+  const lite = usePerformanceMode();
+
   return (
     <section id="work" className="relative px-6 py-32">
       <div className="mx-auto max-w-7xl">
@@ -54,15 +58,15 @@ export function Projects() {
           {projects.map((p, i) => (
             <motion.article
               key={p.title}
-              initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-white/[0.04] to-white/[0.01] p-8 backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 sm:p-10"
+              {...fadeInUp(lite, i * 0.05)}
+              className={`group relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-white/[0.04] to-white/[0.01] p-8 backdrop-blur hover:border-primary/50 sm:p-10 ${lite ? "" : "transition-all duration-500 hover:-translate-y-1"}`}
             >
-              {/* glow blobs */}
-              <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-primary/0 blur-3xl transition-all duration-700 group-hover:bg-primary/20" />
-              <div className="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-secondary/0 blur-3xl transition-all duration-700 group-hover:bg-secondary/15" />
+              {!lite && (
+                <>
+                  <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-primary/0 blur-3xl transition-all duration-700 group-hover:bg-primary/20" />
+                  <div className="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-secondary/0 blur-3xl transition-all duration-700 group-hover:bg-secondary/15" />
+                </>
+              )}
 
               <div className="relative flex h-full flex-col">
                 <div className="flex items-start justify-between gap-4">
