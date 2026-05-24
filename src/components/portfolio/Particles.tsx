@@ -1,17 +1,9 @@
 import { useMemo } from "react";
 
-export function Particles({
-  count = 30,
-  lite = false,
-}: {
-  count?: number;
-  lite?: boolean;
-}) {
-  const effectiveCount = lite ? 0 : count;
-
+export function Particles({ count = 30 }: { count?: number }) {
   const particles = useMemo(
     () =>
-      Array.from({ length: effectiveCount }, (_, i) => ({
+      Array.from({ length: count }, (_, i) => ({
         id: i,
         size: 1 + Math.random() * 2.5,
         left: Math.random() * 100,
@@ -20,12 +12,8 @@ export function Particles({
         duration: 10 + Math.random() * 14,
         opacity: 0.15 + Math.random() * 0.45,
       })),
-    [effectiveCount],
+    [count],
   );
-
-  if (effectiveCount === 0) {
-    return null;
-  }
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>

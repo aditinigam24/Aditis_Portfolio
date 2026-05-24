@@ -5,8 +5,6 @@ import {
   RESUME_DOWNLOAD_NAME,
   RESUME_PDF_URL,
 } from "@/config/site";
-import { usePerformanceMode } from "@/hooks/use-performance-mode";
-import { fadeIn, heroTitle } from "@/lib/motion-presets";
 import { Particles } from "./Particles";
 
 const stats = [
@@ -17,40 +15,41 @@ const stats = [
 ];
 
 export function Hero() {
-  const lite = usePerformanceMode();
-
   return (
     <section
       id="top"
       className="relative flex min-h-screen items-center overflow-hidden px-6 lg:px-12 pt-32 md:pt-24"
     >
-      <Particles count={lite ? 0 : 40} lite={lite} />
-      <div
-        className={`grid-fade absolute inset-0 ${lite ? "opacity-30" : "opacity-60"}`}
-        aria-hidden
-      />
+      <Particles count={40} />
+      <div className="grid-fade absolute inset-0 opacity-60" aria-hidden />
 
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
         {/* LEFT */}
         <div>
           <motion.div
-            {...fadeIn(lite, 0.2)}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-white/[0.03] px-3 py-1.5 text-xs text-muted-foreground backdrop-blur"
           >
             <span className="relative flex h-2 w-2">
-              {!lite && (
-                <span className="absolute inset-0 animate-ping rounded-full bg-secondary/70" />
-              )}
+              <span className="absolute inset-0 animate-ping rounded-full bg-secondary/70" />
               <span className="relative h-2 w-2 rounded-full bg-secondary" />
             </span>
             Available for opportunities · 2026
           </motion.div>
 
           <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[10rem] font-semibold leading-[0.85] tracking-tighter">
-            {["ADITI", "NIGAM"].map((word, i) => (
+            {['ADITI', 'NIGAM'].map((word, i) => (
               <motion.span
                 key={word}
-                {...heroTitle(lite, i)}
+                initial={{ opacity: 0, y: 60, filter: "blur(20px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{
+                  delay: 0.3 + i * 0.15,
+                  duration: 1,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 className="block"
               >
                 <span className={i === 1 ? "text-gradient-primary" : "text-gradient"}>
@@ -61,14 +60,18 @@ export function Hero() {
           </h1>
 
           <motion.p
-            {...fadeIn(lite, 0.5)}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.8 }}
             className="mt-8 max-w-xl text-xs font-medium uppercase tracking-[0.25em] text-muted-foreground"
           >
             Full Stack Developer · Generative AI Explorer · Entrepreneur
           </motion.p>
 
           <motion.p
-            {...fadeIn(lite, 0.6)}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.85, duration: 0.8 }}
             className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg"
           >
             Creating intelligent and aesthetic digital experiences through code,
@@ -76,7 +79,9 @@ export function Hero() {
           </motion.p>
 
           <motion.div
-            {...fadeIn(lite, 0.7)}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.8 }}
             className="mt-10 flex flex-wrap items-center gap-3"
           >
             <a
@@ -108,26 +113,16 @@ export function Hero() {
 
         {/* RIGHT — personality card */}
         <motion.div
-          {...(lite
-            ? fadeIn(lite, 0.4)
-            : {
-                initial: { opacity: 0, x: 40, filter: "blur(20px)" },
-                animate: { opacity: 1, x: 0, filter: "blur(0px)" },
-                transition: { delay: 0.5, duration: 1.2, ease: [0.22, 1, 0.36, 1] },
-              })}
+          initial={{ opacity: 0, x: 40, filter: "blur(20px)" }}
+          animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+          transition={{ delay: 0.5, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="relative"
         >
-          {!lite && (
-            <div className="absolute -inset-8 rounded-[3rem] bg-gradient-to-br from-primary/30 via-transparent to-secondary/25 opacity-60 blur-3xl" />
-          )}
+          <div className="absolute -inset-8 rounded-[3rem] bg-gradient-to-br from-primary/30 via-transparent to-secondary/25 opacity-60 blur-3xl" />
 
           <div className="glass-strong relative overflow-hidden rounded-[2rem] p-8 sm:p-10">
-            {!lite && (
-              <>
-                <div className="absolute right-0 top-0 h-40 w-40 -translate-y-1/2 translate-x-1/2 rounded-full bg-primary/30 blur-3xl" />
-                <div className="absolute bottom-0 left-0 h-32 w-32 -translate-x-1/2 translate-y-1/2 rounded-full bg-secondary/25 blur-3xl" />
-              </>
-            )}
+            <div className="absolute right-0 top-0 h-40 w-40 -translate-y-1/2 translate-x-1/2 rounded-full bg-primary/30 blur-3xl" />
+            <div className="absolute bottom-0 left-0 h-32 w-32 -translate-x-1/2 translate-y-1/2 rounded-full bg-secondary/25 blur-3xl" />
 
             <div className="relative">
               <div className="mb-6 flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-muted-foreground">
